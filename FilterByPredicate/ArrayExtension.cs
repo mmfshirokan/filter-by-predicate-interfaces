@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace FilterByPredicate
 {
+    /// <summary>
+    /// Class of the additional operations with array.
+    /// </summary>
     public static class ArrayExtension
     {
         /// <summary>
@@ -16,7 +19,26 @@ namespace FilterByPredicate
         /// <exception cref="ArgumentNullException">Thrown when predicate is null.</exception>
         public static int[] Select(this int[]? source, IPredicate? predicate)
         {
-            throw new NotImplementedException();
-        }
+                if (source is null)
+                {
+                    throw new ArgumentNullException(nameof(source), "Array is null.");
+                }
+
+                if (source.Length == 0)
+                {
+                    throw new ArgumentException("array is empty.");
+                }
+
+                List<int> result = new List<int>();
+                foreach (var item in source)
+                {
+                    if (predicate.IsMatch(item))
+                    {
+                        result.Add(item);
+                    }
+                }
+
+                return result.ToArray();
+            }
     }
 }
